@@ -39,23 +39,6 @@ export const FILTER_KEYS: FilterKey[] = [
   "mode",
 ];
 
-export const TABLE_COLS = [
-  "SKU",
-  "Hardware Type",
-  "GPU",
-  "CPU",
-  "cuVS Algo",
-  "Mode",
-  "Recall Range",
-  "Search Batch Size",
-  "TopK",
-  "Index Build Time (s)",
-  "Mean Search Throughput (QPS)",
-  "Mean Search Latency (ms)",
-  "Mean Recall",
-  "N Points in Bucket",
-];
-
 const NV_GREEN_SHADES = [
   "#76B900",
   "#558700",
@@ -422,12 +405,4 @@ export function fmtBar(value: number | null): string {
   if (abs >= 100) return value.toFixed(0);
   if (abs >= 10) return value.toFixed(1);
   return value.toFixed(2);
-}
-
-export function sortTableRows(rows: BenchmarkRow[]): BenchmarkRow[] {
-  return [...rows].sort((a, b) =>
-    `${a["Hardware Type"]}${a["cuVS Algo"]}${a["SKU"]}${a["Search Batch Size"]}${a["TopK"]}${a["Recall Range"]}`.localeCompare(
-      `${b["Hardware Type"]}${b["cuVS Algo"]}${b["SKU"]}${b["Search Batch Size"]}${b["TopK"]}${b["Recall Range"]}`,
-    ),
-  );
 }

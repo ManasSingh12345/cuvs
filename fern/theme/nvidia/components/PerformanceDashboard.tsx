@@ -19,9 +19,7 @@ import {
   labelFor,
   labelPlural,
   SeriesLegendItem,
-  sortTableRows,
   SortMode,
-  TABLE_COLS,
   type BenchmarkRow,
 } from "./performanceDashboardLogic";
 
@@ -344,57 +342,6 @@ function ChartPanel({
   );
 }
 
-function ResultsTable({ rows }: { rows: BenchmarkRow[] }) {
-  const sortedRows = useMemo(() => sortTableRows(rows), [rows]);
-
-  return (
-    <div className="pd-table-panel">
-      <h3>Raw data ({sortedRows.length})</h3>
-      <div className="pd-table-scroll">
-        <table>
-          <thead>
-            <tr>
-              {TABLE_COLS.map((column) => (
-                <th key={column}>{column}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedRows.map((row, index) => (
-              <tr key={`${row.SKU}-${row["Recall Range"]}-${index}`}>
-                {TABLE_COLS.map((column) => {
-                  const value = row[column];
-                  if (column === "Hardware Type") {
-                    const cls = value === "GPU" ? "gpu" : "cpu";
-                    return (
-                      <td key={column}>
-                        <span className={`pd-hw-dot ${cls}`} />
-                        {value}
-                      </td>
-                    );
-                  }
-                  if (column === "Mean Recall" && typeof value === "number") {
-                    return <td key={column}>{`${(value * 100).toFixed(1)}%`}</td>;
-                  }
-                  if (typeof value === "number" && value >= 1000) {
-                    return <td key={column}>{value.toLocaleString()}</td>;
-                  }
-                  if (typeof value === "number") {
-                    return (
-                      <td key={column}>{Math.round(value * 1000) / 1000}</td>
-                    );
-                  }
-                  return <td key={column}>{value ?? ""}</td>;
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
 export default function PerformanceDashboard() {
   const [mounted, setMounted] = useState(false);
   const allRows = BENCHMARK_ROWS;
@@ -475,8 +422,6 @@ export default function PerformanceDashboard() {
           chartsReady={chartsReady}
         />
       ))}
-
-      <ResultsTable rows={filteredRows} />
     </div>
   );
 }

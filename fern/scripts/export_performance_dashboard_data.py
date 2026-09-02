@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 REPO_DIR = Path(__file__).resolve().parents[2]
-DEFAULT_CSV = REPO_DIR / "data" / "benchmarks" / "results_cuvs_26_04.csv"
+DEFAULT_CSV = REPO_DIR / "fern" / "data" / "results_cuvs_26_04.csv"
 OUTPUT_JSON = REPO_DIR / "fern" / "assets" / "data" / "benchmark_results.json"
 BENCHMARK_DATA_TS = (
     REPO_DIR / "fern" / "theme" / "nvidia" / "components" / "benchmarkData.ts"
